@@ -159,8 +159,9 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
   
 Rodrigo Zárate Algecira - [Github]https://github.com/rodrigozarate() / [Twitter](https://twitter.com/Rodrigo_Zarate_)
   
-José Valdiviezo - [Github](https://github.com/rodrigozarate) / / [Twitter](https://twitter.com/josepadre30)
+José Valdiviezo - [Github](https://github.com/joseluis-max) / [Twitter](https://twitter.com/josepadre30)
 
+Julio Cesar Arenas - [Github](https://github.com/jihuder) / [Twitter](https://twitter.com/JulioAr73961918)
 
 Second part of Airbnb: Joann Vuong
 ## License
