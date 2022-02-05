@@ -78,15 +78,12 @@ class DBStorage:
      
     def get(self, cls, id):
         """A method to recover an object"""
-        obj = self.__session.query(cls).filter_by(id = id)
+        obj = self.__session.query(cls).get(id)
         if obj is None:
             return None
         return obj
 
     def count(self, cls=None):
         """Returns the number of stored objects matching the given class"""
-        if cls:
-            return self.__session.query(func.count(cls))
-        else:
-            obj = self.__session.query.all()
-            return len(obj)
+        obj = self.all(cls)
+        return (len(obj))
