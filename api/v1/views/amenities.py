@@ -7,7 +7,7 @@ from models.amenity import Amenity
 from models import storage
 
 
-def validate(obj, ref_id):
+def validate(cls, ref_id):
     """ validate if query have id to reference """
     try:
         valid = storage.get(cls, ref_id)
