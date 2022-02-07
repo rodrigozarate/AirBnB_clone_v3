@@ -47,7 +47,7 @@ def create_city(request, state_id):
     """ create city """
     validate(State, state_id)
     request_json = request.get_json()
-    if request_json is None:
+    if (request_json is None):
         abort(400, 'Not a JSON')
     try:
         name_city = request_json['name']
