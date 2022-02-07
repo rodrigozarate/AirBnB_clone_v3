@@ -9,17 +9,17 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app, resources={"/*": {"origins": '0.0.0.0'}})
-app.register_blueprint(app)
+app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown_appcontext(exception):
+def teardown_appcontext(self):
     """Handles storage calls"""
     storage.close()
 
 
 @app.errorhandler(404)
-def page_not_found(err):
+def page_not_found(self):
     return jsonify({
         "error": "Not found"
     }), 404
