@@ -49,7 +49,7 @@ def create_states():
         name = new_object.get('name', None)
         if name is None:
             abort(400, "Missing name")
-        obj = State(new_object)
+        obj = State(**new_object)
         obj.save()
         return jsonify(obj.to_dict()), 201
 
