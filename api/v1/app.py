@@ -16,23 +16,13 @@ def teardown_appcontext(exception):
     """Handles storage calls"""
     storage.close()
 
-<<<<<<< HEAD
-@app.errorhandler()
-def handle_global_error(error):
-    """Returns a page error"""
-    msj = {
-        "error":"Not found"
-    }
-    state = 404
-    return jsonify(msj), state
-=======
+
 @app.errorhandler(404)
 def page_not_found(err):
     return jsonify({
         "error": "Not found"
     }), 404
 
->>>>>>> 11c9cdeb494b6bb314d791fa3a8d9669b23fa84b
 
 if __name__ == "__main__":
     PORT = getenv("HBNB_API_PORT", '5000')
