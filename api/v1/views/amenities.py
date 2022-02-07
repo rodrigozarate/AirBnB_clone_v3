@@ -2,9 +2,9 @@
 """ route amenities """
 from flask import request, abort, jsonify
 from api.v1.app import *
-from api.v1.views.index import *
-from models.amenity import Amenity
+from api.v1.views import app_views
 from models import storage
+from models.amenity import Amenity
 
 
 def validate(cls, ref_id):
@@ -22,9 +22,9 @@ def get_amenities(amenity_id):
     if (amenity_id is not None):
         get_amenity = validate(Amenity, amenity_id).to_dict()
         return jsonify(get_amenity)
-    amenity_obj = storage.get(Amenity)
+    amenity_obj = storage.all(Amenity)
     amenities = []
-    for amenity in amenity_obj:
+    for amenity in amenity_obj.values():
         amenities.append(amenity.to_dict())
     return jsonify(amenities)
 
