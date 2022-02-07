@@ -2,25 +2,25 @@
 """ Handles all default RESTFul API """
 from flask import request, abort, jsonify
 from api.v1.app import *
-from api.v1.views.index import *
-from models.state import State
+from api.v1.views import app_views
 from models import storage
+from models.state import State
 
 
-def validate(ref_id):
+def validate(id):
     """ validate if query have id to reference """
     try:
-        valid = storage.get(State, ref_id)
+        valid = storage.get(State, id)
         valid.to_dict()
     except Exception:
         abort(404)
     return valid
 
 
-def get_all_states(id_state):
+def get_all_states(state_id):
     """ get all states """
-    if id_state is not None:
-        state = validate(id_state)
+    if state_id is not None:
+        state = validate(state_id)
         dict_state = state.to_dict()
         return jsonify(dict_state)
     states = storage.all(State)
@@ -30,9 +30,9 @@ def get_all_states(id_state):
     return jsonify(states_all)
 
 
-def delete_state(id_state):
+def delete_state(state_id):
     """ delete state request """
-    state = validate(id_state)
+    state = validate(state_id)
     storage.delete(state)
     storage.save()
     response = {}
