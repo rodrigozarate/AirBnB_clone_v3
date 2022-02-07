@@ -25,7 +25,7 @@ def get_places(city_id, place_id):
     """ get all places """
     if (place_id is not None):
         place = validate(Place, place_id).to_dict()
-        return jsonify(dict_state)
+        return jsonify(place)
     city = storage.get(City, city_id)
     try:
         all_places = city.places
@@ -33,14 +33,14 @@ def get_places(city_id, place_id):
         abort(404)
     places = []
     for place in all_places:
-        places.append(placee.to_dict())
+        places.append(place.to_dict())
     return jsonify(places)
 
 
 def delete_place(place_id):
     """ delete place request """
     place = validate(Place, place_id)
-    storage.delete(placee)
+    storage.delete(place)
     storage.save()
     response = {}
     return jsonify(response)
@@ -88,8 +88,8 @@ def places(city_id, place_id):
     if (request.method == "GET"):
         return get_places(city_id, place_id)
     elif request.method == "DELETE":
-        return delete_placee(placee_id)
+        return delete_place(place_id)
     elif request.method == "POST":
         return create_place(request, city_id), 201
     elif request.method == 'PUT':
-        return update_place(placee_id, request), 200
+        return update_place(place_id, request), 200
