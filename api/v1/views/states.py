@@ -10,7 +10,7 @@ from models import storage
 def validate(ref_id):
     """ validate if query have id to reference """
     try:
-        valid = storage.get(obj, ref_id)
+        valid = storage.get(State, ref_id)
         valid.to_dict()
     except Exception:
         abort(404)
