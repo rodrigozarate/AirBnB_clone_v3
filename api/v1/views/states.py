@@ -19,7 +19,7 @@ def validate(id):
 
 def get_all_states(state_id):
     """ get all states """
-    if state_id is not None:
+    if (state_id is not None):
         state = validate(state_id)
         dict_state = state.to_dict()
         return jsonify(dict_state)
