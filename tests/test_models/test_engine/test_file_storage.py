@@ -114,7 +114,7 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-def test_get_db(self):
+    def test_get_db(self):
         """ Tests method for obtaining an instance db storage"""
         dic = {"name": "Bogota"}
         instance = State(**dic)
