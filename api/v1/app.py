@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ API """
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 import os
 from flask_cors import CORS
@@ -16,6 +16,14 @@ def teardown_appcontext(exception):
     """Handles storage calls"""
     storage.close()
 
+@app.errorhandler()
+def handle_global_error(error):
+    """Returns a page error"""
+    msj = {
+        "error":"Not found"
+    }
+    state = 404
+    return jsonify(msj), state
 
 if __name__ == "__main__":
     
