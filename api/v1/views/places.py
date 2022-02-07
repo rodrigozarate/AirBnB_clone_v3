@@ -9,7 +9,6 @@ from models.place import Place
 from models.user import User
 from models.state import State
 from api.v1.views.cities import get_state_and_city
-from api.v1.views.places_amenities import get_amenities
 
 
 def validate(cls, place_id):
