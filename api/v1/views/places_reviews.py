@@ -3,7 +3,7 @@
    New Review object that handles all
    default RESTFul API actions
 """
-from flask import request
+from flask import request, abort
 from api.v1.app import *
 from api.v1.views.index import *
 from models.review import Review
@@ -21,15 +21,14 @@ def get_place_reviews(place_id):
             new_array.append(review.to_dict())
         return json.dumps(new_array)
     else:
-        return error_handler_404(new_dict)
-
+        abort(404)
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
 def get_review(review_id):
     """Return json file of object Review, filtered with id"""
     new_dict = storage.get(Review, review_id)
     if new_dict is None:
-        return error_handler_404(new_dict)
+        return abort(404)
     else:
         return json.dumps(new_dict.to_dict())
 
@@ -40,7 +39,7 @@ def delete_review(review_id):
     """Delete an object Review by id"""
     object = storage.get(Review, review_id)
     if object is None:
-        return error_handler_404(object)
+        abort(404)
     else:
         storage.delete(object)
         storage.save()
@@ -53,22 +52,22 @@ def create_review(place_id):
     """Create a new object Review"""
     place_dict = storage.get('Place', place_id)
     if place_dict is None:
-        return error_handler_404(place_dict)
+        abort(404)
 
     try:
         request_data = request.get_json()
     except Exception:
-        return error_handler_400("Not a JSON")
+        abort(400, "Not a JSON")
 
     if 'user_id' not in request_data:
-        return error_handler_400("Missing user_id")
+        abort(400, "Missing user_id")
 
     user_dict = storage.get('User', request_data['user_id'])
     if user_dict is None:
-        return error_handler_404(user_dict)
+        abort(404)
 
     if 'text' not in request_data:
-        return error_handler_400("Missing text")
+        abort(400, "Missing text")
 
     information = dict(request_data)
     information['place_id'] = place_id
@@ -85,12 +84,12 @@ def update_review(review_id):
     """Update information of an object Review by id"""
     object = storage.get(Review, review_id)
     if object is None:
-        return error_handler_404(object)
+        abort(404)
 
     try:
         request_data = request.get_json()
     except Exception:
-        return error_handler_400("Not a JSON")
+        abort(400, "Not a JSON")
 
     ignore = ["id", "created_at", "updated_at", "user_id", "place_id"]
     for key, value in dict(request_data).items():
