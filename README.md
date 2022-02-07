@@ -157,7 +157,7 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
   
-Rodrigo Zárate Algecira - [Github]https://github.com/rodrigozarate() / [Twitter](https://twitter.com/Rodrigo_Zarate_)
+Rodrigo Zárate Algecira - [Github](https://github.com/rodrigozarate() / [Twitter](https://twitter.com/Rodrigo_Zarate_)
   
 José Valdiviezo - [Github](https://github.com/joseluis-max) / [Twitter](https://twitter.com/josepadre30)
 
