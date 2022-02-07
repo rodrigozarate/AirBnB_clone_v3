@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """ Route States """
-from flask import request, abort, jsonify
-from itsdangerous import json
-from pyparsing import javaStyleComment
+from flask import request, abort, jsonify   
 from api.v1.app import *
 from api.v1.views.index import *
 from models.state import State
