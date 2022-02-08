@@ -6,7 +6,7 @@ from api.v1.views import app_views
 from models import storage
 from models import Place
 from models import User
-from models import review
+from models import Review
 
 
 def validate(cls, review_id):
