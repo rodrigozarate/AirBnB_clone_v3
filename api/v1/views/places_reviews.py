@@ -4,9 +4,9 @@ from flask import request, abort, jsonify
 from api.v1.app import *
 from api.v1.views import app_views
 from models import storage
-from models import place
-from models import user
-from models import review
+from models.place import place
+from models.user import user
+from models.review import review
 
 
 def validate(cls, review_id):
