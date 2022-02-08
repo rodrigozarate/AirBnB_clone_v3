@@ -24,8 +24,8 @@ def validate(cls, place_id):
 def get_places(city_id, place_id):
     """ get all places """
     if (place_id is not None):
-        place = validate(Place, place_id).to_dict()
-        return jsonify(place)
+        get_place = validate(Place, place_id).to_dict()
+        return jsonify(get_place)
     city = storage.get(City, city_id)
     try:
         all_places = city.places
@@ -48,6 +48,7 @@ def delete_place(place_id):
 
 def create_place(request, city_id):
     """ create place """
+    validate(City, city_id)
     request_json = request.get_json()
     if (request_json is None):
         abort(400, 'Not a JSON')
