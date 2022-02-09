@@ -6,7 +6,7 @@ from api.v1.views import app_views
 from models import storage
 from models import place
 from models import user
-from models import review
+from models.review import Review
 
 
 def validate(cls, review_id):
@@ -22,7 +22,7 @@ def validate(cls, review_id):
 def get_reviews(place_id, review_id):
     """ get all reviews """
     if (review_id is not None):
-        get_review = validate(review.Review, review_id).to_dict()
+        get_review = validate(Review, review_id)
         return jsonify(get_review)
     get_place = storage.get(place.Place, place_id)
     try:
@@ -37,7 +37,7 @@ def get_reviews(place_id, review_id):
 
 def delete_review(review_id):
     """ delete review on request """
-    review = validate(review.Review, review_id)
+    review = validate(Review, review_id)
     storage.delete(review)
     storage.save()
     response = {}
@@ -55,10 +55,10 @@ def create_review(request, place_id):
         abort(400, "Missing user_id")
     validate(user.User, user_id)
     try:
-        review_text = body_request['text']
+        review_text = request_json['text']
     except KeyError:
         abort(400, "Missing text")
-    review = review.Review(text=review_text, place_id=place_id,
+    review = Review(text=review_text, place_id=place_id,
                            user_id=user_id)
     storage.new(review)
     storage.save()
@@ -67,7 +67,7 @@ def create_review(request, place_id):
 
 def update_review(review_id, request):
     """ update review """
-    get_review = validate(review.Review, review_id)
+    get_review = validate(Review, review_id)
     request_json = request.get_json()
     if (request_json is None):
         abort(400, 'Not a JSON')
