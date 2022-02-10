@@ -1,46 +1,48 @@
 #!/usr/bin/python3
 """users route handler"""
-from api.v1.views import app_views
 from flask import jsonify, abort, request
+from api.v1.app import *
+from api.v1.views.index import *
 from models import storage
 from models.user import User
 
 
-def check(user_id):
-    """ user validation id """
+def validate(ref_id):
+    """ validate if query have id to reference """
     try:
-        checker = storage.get(User, user_id)
-        checker.to_dict()
+        valid = storage.get(User, ref_id)
+        valid.to_dict()
     except Exception:
         abort(404)
-    return checker
+    return valid
 
 
 def get_all(user_id):
     """ get all users """
     if (user_id is not None):
-        user = check(user_id)
-        dict_user = user.to_dict()
+        get_user = validate(user_id)
+        dict_user = get_user.to_dict()
         return jsonify(dict_user)
-    user_all = storage.all(User)
-    users_get_all = []
-    for user in user_all.values():
-        users_get_all.append(user.to_dict())
-    return jsonify(users_get_all)
+    users = storage.all(User)
+    users_all = []
+    for user in users.values():
+        users_all.append(user.to_dict())
+    return jsonify(users_all)
 
 
 def delete_user(user_id):
     """ delete user """
-    user = check(user_id)
+    user = validate(user_id)
     storage.delete(user)
     storage.save()
-    return jsonify({})
+    response = {}
+    return jsonify(response)
 
 
 def create_user(request):
     """ create user """
     request_json = request.get_json()
-    if request_json is None:
+    if (request_json is None):
         abort(400, 'Not a JSON')
     try:
         email_usr = request_json['email']
@@ -58,18 +60,18 @@ def create_user(request):
 
 def update_user(user_id, request):
     """ update user """
-    user_check = check(user_id)
+    user = validate(user_id)
     request_json = request.get_json()
-    if request_json is None:
+    if (request_json is None):
         abort(400, 'Not a JSON')
     for key, value in request_json.items():
         if (key not in ('id', 'created_at', 'updated_at', 'email')):
-            setattr(user_check, key, value)
-    storage.save()
-    return jsonify(user_check.to_dict())
+            setattr(user, key, value)
+        storage.save()
+        return jsonify(user_check.to_dict())
 
 
-@app_views.route('/users', methods=['GET', 'POST', ],
+@app_views.route('/users/', methods=['GET', 'POST', ],
                  defaults={'user_id': None}, strict_slashes=False)
 @app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'])
 def users(user_id):
