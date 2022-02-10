@@ -2,27 +2,27 @@
 """users route handler"""
 from flask import jsonify, abort, request
 from api.v1.app import *
-from api.v1.views.index import *
+from api.v1.views import app_views
 from models import storage
 from models.user import User
 
 
-def validate(ref_id):
+def validate(user_id):
     """ validate if query have id to reference """
     try:
-        valid = storage.get(User, ref_id)
+        valid = storage.get(User, user_id)
         valid.to_dict()
     except Exception:
         abort(404)
     return valid
 
 
-def get_all(user_id):
+def get_all_users(user_id):
     """ get all users """
-    if (user_id is not None):
-        get_user = validate(user_id)
-        dict_user = get_user.to_dict()
-        return jsonify(dict_user)
+    if user_id is not None:
+        get_user = validate(user_id).to_dict()
+        """ dict_user = get_user.to_dict() """
+        return jsonify(get_user)
     users = storage.all(User)
     users_all = []
     for user in users.values():
@@ -42,7 +42,7 @@ def delete_user(user_id):
 def create_user(request):
     """ create user """
     request_json = request.get_json()
-    if (request_json is None):
+    if request_json is None:
         abort(400, 'Not a JSON')
     try:
         email_usr = request_json['email']
@@ -77,7 +77,7 @@ def update_user(user_id, request):
 def users(user_id):
     """ users route """
     if (request.method == "GET"):
-        return get_all(user_id)
+        return get_all_users(user_id)
     elif (request.method == "DELETE"):
         return delete_user(user_id)
     elif (request.method == "POST"):
