@@ -68,7 +68,7 @@ def update_user(user_id, request):
         if (key not in ('id', 'created_at', 'updated_at', 'email')):
             setattr(user, key, value)
         storage.save()
-        return jsonify(user_check.to_dict())
+        return jsonify(user.to_dict())
 
 
 @app_views.route('/users/', methods=['GET', 'POST', ],
